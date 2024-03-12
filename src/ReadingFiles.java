@@ -43,6 +43,8 @@ public class  ReadingFiles {
 
                 //Starts at line 0 and moves line by line through the file
                 int line = 0;
+                int spaces = 0;
+                int chars = 0;
                 //Rec holds what the reader finds on the line
                 String rec = "";
                 //Prints File Path of selected File
@@ -51,16 +53,29 @@ public class  ReadingFiles {
                 while (reader.ready()) {
                     rec = reader.readLine();
                     line++;
+                    chars += rec.length();
+                    for (int i = 0; i < rec.length(); i++) {
+                        if (rec.charAt(i) == ' ') {
+                            spaces++;
+                        }
+                    }
                     //Prints the line # and the contents of the line
                     System.out.printf("\nLine%4d: %-60s ", line, rec);
                 }
                 reader.close(); // must close the file to seal it and clear buffer
-                System.out.println("\n\nData file read!"); //Success message
+                System.out.println("\n\nData file read!\n"); //Success message
+                System.out.println("File summary");
+                System.out.println("Number of Lines: " + line);
+                System.out.println("Number of spaces: " + spaces);
+                System.out.println("Number of words: " + (spaces + 1));
+                System.out.println("Number of characters: " + chars);
+
             } else {
                 //This else statement is hit when the user closes the JFileChooser Wizard without selecting file
                 System.out.println("File not selected. Please restart program.");
                 System.exit(0); //Shuts down program
             }
+
         }
         //This catch block is hit when the user file the user attempts to open a file that can not be found
         catch (NoSuchFileException e) {
